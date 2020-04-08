@@ -27,8 +27,8 @@ class BasePage{
          this.highLightControl(element);
          element.click(); 
     }
-   
-    webClickSel(sel,waitTime=2000){
+
+   webClickSel(sel,waitTime=2000){
         this.webWaitUntilAppeared(sel,10000)
         //this.highLightControl(element);
         return this.webFindElement(sel).click();
@@ -52,7 +52,8 @@ class BasePage{
         }
          return isExist;
      }
-    webIsEnabled(element){
+ 
+     webIsEnabled(element){
         this.highLightControl(element);
         return element.isEnabled();
     }
@@ -62,17 +63,17 @@ class BasePage{
         return element.waitForEnabled(waitTime);
     }
 
-    webVaitForDisplayed(element,waitTime=2000){
-       var isDisplayed = element.waitForDisplayed(waitTime);
-       console.log("££££ IsVisible ="+isDisplayed)
+    webWaitForDisplayed(element,waitTime=2,reverse=false){
+       var isDisplayed = element.waitForDisplayed(waitTime*1000,reverse,element+' not found..!!');
+    //    console.log("££££ IsVisible ="+isDisplayed)
        if(isDisplayed){
-        console.log("££££ iN HIGHLIGHT ="+isDisplayed)
+        // console.log("££££ iN HIGHLIGHT ="+isDisplayed)
         this.highLightControl(element);
        }
         return isDisplayed;
     }
 
-    webVaitForDisplayedSel(seletor,waitTime=2000){
+    webWaitForDisplayedSel(seletor,waitTime=2000){
         var isDisplayed = browser.waitForVisible(seletor,waitTime);
         console.log("££££ IsVisible ="+isDisplayed)
         if(isDisplayed){

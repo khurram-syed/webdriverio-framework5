@@ -9,6 +9,7 @@ var basePage = require('../pages/base.page')
 Given('user navigates to the site', function() {
   browser.url('./');
   console.log("Navigating to the site..!");
+  // browser.pause(10000)
   basePage.waitToLoad(2)
 })
 
@@ -20,7 +21,7 @@ When(/^I click on the \"(.*)\" button$/, (item) => {
    }else if(item=="buy"){
     basePage.webClick(homePage.buyButton);
    }
-   basePage.waitToLoad(6)
+   basePage.waitToLoad(4)
 });
 
 Then(/^I should be seeing the \"(.*)\" page$/,url => {
@@ -42,30 +43,47 @@ Then('I should be seeing the review label', function() {
 })
 
 When(/^user clicks on "(.*)" accordion$/, (accordNo) => {
-   console.log(`user clicks on ${accordNo} accordion..!`);
-    basePage.webClick(homePage.getAccordionLiNo(accordNo.match(/\d+/g)[0]));
+    accordNo = accordNo.match(/\d+/g)[0]
+    console.log(`user clicks on ${accordNo} accordion..!`);
+    // const accordionEle = homePage.getAccordionLiNo(accordNo)
+    // homePage.getAccordionLiNo(accordNo).waitForDisplayed({timeout:5000,interval:500})
+    basePage.webClick(homePage.getAccordionLiNo(accordNo));
     //  basePage.waitToLoad(2)
   // basePage.webClick(homePage.getAccordionNo(2));
 });
 
 Then(/^user should see "(.*)" accordion is open and other two are closed$/,(accordNo) => {
+   accordNo=accordNo.match(/\d+/g)[0]
    console.log(`Then user should see ${accordNo} accordion is open and other two are closed..!`);
-   const accordion2Displayed = homePage.getAccordionNoDiv(2).isDisplayed()
-   console.log('Accordion 2 displayed :',accordion2Displayed)
-     const accordion1Displayed = homePage.getAccordionNoDiv(1).isDisplayed()
+   let accordion3rdCollapsed=false;
+ // Checking if the Second Accordion expanded
+   const accordionExpandedDisplayed = basePage.webWaitForDisplayed(homePage.getAccordionNoDiv(accordNo))
+    //  console.log('Accordion 2 Not displayed :',accordionExpandedDisplayed)
+ // Checking if the First Accordion collapsed
+   const accordion1Displayed = basePage.webWaitForDisplayed(homePage.getAccordionNoDiv(1),2,true)
    console.log('Accordion 1 displayed :',accordion1Displayed)
-  //  const accorion1Display = browser.getElementCSSValue(homePage.getAccordionNoSel(1),'display');
-   const accorion1Display = browser.execute(`return $("ul.accordion li:nth-child(1) div").css('display')`);
-   console.log('***Accordion 1 display property :',accorion1Display)
-   const accorion2Display = browser.execute(`return $("ul.accordion li:nth-child(2) div").css('display')`);
-   console.log('***Accordion 2 display property :',accorion2Display)
+   
+  /*  "getElementCSSValue(selector,cssProperty) not working.."
+  const accorion1DisplayCSSProp = browser.getElementCSSValue(homePage.getAccordionNoDivSel(2),'display');
+   console.log('***Accordion 2 display **CSS*** Property :',accorion1DisplayCSSProp)
+ */   
 
+   /* Workaround to get the Element CSS Property */
+  /*  const accorionExpandDisplay = browser.execute(`return $("ul.accordion li:nth-child(1) div").css('display')`);
+   console.log('***Accordion 1 display property :',accorionExpandDisplay)
+  */
 
-     //  if(accordNo=="2nd"){
-       
-
-  //   }else if(accordNo=="3rd"){
-  //      basePage.webClick(homePage.buyButton);
-  //   }
+    if(accordNo=="2"){
+      // Checking if the First Accordion collapsed
+      const isExisted = homePage.getAccordionNoDiv(3).isExisting()     //--> true
+      const isDisplayed = homePage.getAccordionNoDiv(3).isDisplayed()  //--> false
+      console.log(`***isExisted : ${isExisted}  - isDisplayed : ${isDisplayed}`)
+      accordion3rdCollapsed = basePage.webWaitForDisplayed(homePage.getAccordionNoDiv(3),2,true)
+    }else if(accordNo=="3"){
+      accordion3rdCollapsed = basePage.webWaitForDisplayed(homePage.getAccordionNoDiv(2),2,true)
+    }
+    expect(accordionExpandedDisplayed, "Assertion Failed...Accordion "+accordNo+" not expanded..!!").to.be.true
+    expect(accordion1Displayed,'Assertion Failed...Accordion 1 not collapsed..!!').to.be.true  
+    expect(accordion3rdCollapsed,'Assertion Failed...Accordion 3rd one not collapsed..!!').to.be.true  
   basePage.waitToLoad(2)
 });

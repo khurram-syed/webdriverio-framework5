@@ -14,7 +14,7 @@ class HomePage{
     return $("ul.accordion li:nth-child("+accordNo+") div")
 }
 
- getAccordionNoSel(accordNo){
+ getAccordionNoDivSel(accordNo){
     return "ul.accordion li:nth-child("+accordNo+") div"
  }
 
