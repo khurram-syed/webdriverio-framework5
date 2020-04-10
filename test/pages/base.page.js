@@ -11,10 +11,10 @@ class BasePage{
     }
     
     webFindElement(selector){
-        browser.pause(1000)
+        this.waitToLoad(2)
         try
           { var element = $(selector)
-            this.highLightControl(element)
+             this.highLightControl(element)
             return element;
           }catch(error){
               console.log("Find Element Error : "+error)
@@ -40,61 +40,70 @@ class BasePage{
    }
 
    webSetValue(element,value){
-        this.highLightControl(element);
+        this.webWaitForDisplayed(element)
         element.setValue(value); 
     }
 
-    /* ------------------ WaitFor(Exist/Displayed/Exist) commands -------------- */
-    webWaitForExist(element,waitTime=2000){
-        var isExist = element.waitForExist(waitTime);
-        if(isExist){
-         this.highLightControl(element);
+    webGetText(element){
+        this.highLightControl(element);
+       return  element.getText();
+    }
+/* ------------------ Is(Exist/Displayed/Exist) commands -------------- */
+    webIsExisting(element){
+      this.highLightControl(element);
+        return element.isExisting(); 
+    }
+    
+    webIsEnabled(element){
+            this.highLightControl(element);
+            return element.isEnabled();
+    }
+
+    webIsDisplayed(element){
+        this.highLightControl(element);
+        return element.isDisplayed();
+    }
+
+/* ------------------ WaitFor(Exist/Displayed/Exist) commands -------------- */
+
+    webWaitForExist(element,timeout=10000,reverse=false,timeoutMsg='waitForExit false',interval=250){
+        const isExisting = element.waitForExist({timeout:timeout,reverse:reverse,timeoutMsg:timeoutMsg,interval:interval});
+        if(isExisting){
+               this.highLightControl(element);
         }
-         return isExist;
-     }
- 
-     webIsEnabled(element){
-        this.highLightControl(element);
-        return element.isEnabled();
+         return isExisting;
     }
 
-    webWaitForEnabled(element,waitTime=2000){
-        this.highLightControl(element);
-        return element.waitForEnabled(waitTime);
-    }
-
-    webWaitForDisplayed(element,waitTime=2,reverse=false){
-       var isDisplayed = element.waitForDisplayed(waitTime*1000,reverse,element+' not found..!!');
-    //    console.log("££££ IsVisible ="+isDisplayed)
-       if(isDisplayed){
-        // console.log("££££ iN HIGHLIGHT ="+isDisplayed)
-        this.highLightControl(element);
-       }
-        return isDisplayed;
-    }
-
-    webWaitForDisplayedSel(seletor,waitTime=2000){
-        var isDisplayed = browser.waitForVisible(seletor,waitTime);
-        console.log("££££ IsVisible ="+isDisplayed)
+    webWaitForDisplayed(element,timeout=10000,reverse=false,timeoutMsg='waitForDisplayed false',interval=250){
+        console.log(`*** In webWaitForDisplayed --> timeout : ${timeout} - reverse:${reverse}`)
+        const isDisplayed = element.waitForDisplayed({timeout:timeout,reverse:reverse,timeoutMsg:timeoutMsg,interval:interval});
+        console.log('****webWaitForDisplayed - isDisplayed :',isDisplayed)
         if(isDisplayed){
-         console.log("%%%% iN HIGHLIGHT ="+isDisplayed)
-         return this.webFindElement(seletor);
+            this.highLightControl(element);
         }
-         return false;
-     }
+         return isDisplayed;
+    }
+    
+    webWaitForEnabled(element,timeout=10000,reverse=false,timeoutMsg='waitForEnabled false',interval=250){
+        var isEnabled = element.waitForEnabled({timeout:timeout,reverse:reverse,timeoutMsg:timeoutMsg,interval:interval});
+        if(isEnabled){
+            this.highLightControl(element);
+        }
+      return isEnabled
+    }
+
+    webWaitUntil(condition,timeout=10,timeoutMsg='waitUntil false',interval=250){
+        var flag = browser.waitUntil(condition,{timeout:timeout*1000,timeoutMsg,interval});
+      return flag
+    }
+
+ /* ----------------Miscellanous------------------------------- */
+    webScrollIntoView(element){
+           this.webWaitForDisplayed(element)
+           element.scrollIntoView();
+           this.waitToLoad(1)
+    }
  
-     webWaitForExistElement(sel,waitTime=2000){
-      try {
-           var isExist = element.waitForExist(waitTime);
-           if(isExist){
-           this.highLightControl(element);
-        }
-          return isExist;
-        }catch(error){
-          console.log(error)
-       }  
-       return false;
-     }
   
      webDragAndDrop(selector1,selector2){
         this.webFindElement(selector1);
@@ -102,15 +111,6 @@ class BasePage{
         browser.dragAndDrop(selector1,selector2); 
         
        }
-
-    //  webWaitUntilDisappear(element,waitTime=2000){
-    //      this.highLightControl(element);
-    //     var flag=browser.waitUntil(()=>{
-    //         console.log("**************")
-    //        return element.isVisible()!==true;
-    //     },waitTime)
-    //     return flag;
-    //  }
    
     webWaitUntilDisappear(element,waitTime=2000){
        var flag=browser.waitUntil(()=>{
@@ -119,57 +119,11 @@ class BasePage{
        },waitTime);
        return flag;
     }
-    //  webWaitUntilAppeared(element,waitTime=2000){
-    //     var flag=browser.waitUntil(()=>{
-    //         console.log("**************")
-    //        if(element.isVisible()===true){
-    //         console.log("*******FOUND*******") 
-    //           return true;
-    //        }
-    //     },waitTime)
-    //     this.highLightControl(element);
-    //     return flag;
-    //  }
-     webWaitUntilAppeared(sel,waitTime=2000){
-        var flag=browser.waitUntil(()=>{
-            console.log("**************")
-           if(browser.isVisible(sel)===true){
-              console.log("*******FOUND*******") 
-              return true;
-           }
-        },waitTime)
-        console.log(`------------------------------------------- Flag : ${flag}`)
-        if(flag){
-          this.webFindElement(sel);
-        }
-        return flag;
-     }
-
-     webSetSelectValue(element,value, waitTime=2000){
-        this.highLightControl(element);
-        element.selectByValue(value);
-    }
-
-    webGetSelectValue(element,waitTime=2000){
-        this.highLightControl(element);
-        return element.getValue();
-    }
+ 
     
      webMouseOver(element,waitTime=2000){
         this.highLightControl(element);
         element.moveToObject(1,1);
-    }
-
-    webGetText(element,waitTime=10000){
-        this.webVaitForDisplayed(element,waitTime)
-        //this.highLightControl(element);
-        return element.getText();
-    }
-
-    webGetTextSel(sel,waitTime=2000){
-        this.webWaitUntilAppeared(sel,waitTime)
-        //this.highLightControl(element);
-        return this.webFindElement(sel).getText();
     }
 
     webWaitForAlert(waitTime=10000){

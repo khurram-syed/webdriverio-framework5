@@ -5,21 +5,21 @@ Feature: Reviews Checks
 
   Background: Opening the site
      Given user navigates to the site
-  @wip1
+  @wip1 @review1
   Scenario Outline: Check the Email Address
-     When I click on the "product" button
-     And I set the email value "test.com"
-     And I set the following login credentials
+     When user clicks on the "product" button
+     And user sets the "email" value "test.com"
+     And user sets the following login credentials
      | loginName | loginPassword |
      | Mark      | pass1234      |
-     And I click on review text box with <user> and <password>
-     Then I should see error message "Please enter a valid email address." for email
-     Examples:
-      |user|password|
-      |user@phptravels.com|demouser|
-
+     And user clicks on review text box with <user> and <password>
+     Then user should see error message "Please enter a valid email address." for email
+      Examples:
+         |user                | password | 
+         |user@phptravels.com | demouser |
+   @review2
    Scenario: Check the Empty Review Text Error
-      When I click on the "product" button
-      And I set the email value "test@test.com"
-      And I click on review text box
-      Then I should see error message "Please enter a valid email address." for review
+      When user clicks on the "product" button
+      And user sets the "email" value "test@test.com"
+      And user clicks on review text box
+      Then user should see error message "Please enter a valid email address." for review

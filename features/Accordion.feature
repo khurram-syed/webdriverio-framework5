@@ -1,4 +1,4 @@
-Feature: Home Page FAQ 
+Feature: Home Page Accorion FAQ 
 
   Background: 
     Given user navigates to the site

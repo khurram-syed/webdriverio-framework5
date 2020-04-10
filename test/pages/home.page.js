@@ -18,8 +18,12 @@ class HomePage{
     return "ul.accordion li:nth-child("+accordNo+") div"
  }
 
- getAccordionActiveNoDiv(accordNo){
-    return $("ul.accordion li:nth-child("+accordNo+")[aria-hidden=false]")
-}
+  getAccordionActiveNoDiv(accordNo){
+     return $("ul.accordion li:nth-child("+accordNo+") div[aria-hidden=false]")
+  }
+
+  getAccordionNoNotActiveDiv(accordNo){
+    return $("ul.accordion li:nth-child("+accordNo+") div[aria-hidden=true]")
+ }
 }
 module.exports = new HomePage();

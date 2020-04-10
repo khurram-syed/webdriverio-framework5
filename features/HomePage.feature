@@ -7,9 +7,9 @@ Feature: Home Page Checks
      Given user navigates to the site
   @home1
   Scenario: Check the product button functionality
-     When I click on the "product" button
-     Then I should be seeing the review label
+     When user clicks on the "product" button
+     Then user should be seeing the review label
   @wip
    Scenario: Check the Buy button functionality
-        When I click on the "buy" button
-        Then I should be seeing the "Mom's_Old-Fashioned_Robot_Oil" page
+        When user clicks on the "buy" button
+        Then user should be seeing the "Mom's_Old-Fashioned_Robot_Oil" page
