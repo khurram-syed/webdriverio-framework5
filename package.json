@@ -27,6 +27,8 @@
     "@wdio/spec-reporter": "^5.16.15",
     "@wdio/sync": "^5.16.15",
     "chai": "^4.2.0",
-    "glob": "^7.1.6"
+    "glob": "^7.1.6",
+    "node-fetch": "^2.6.0",
+    "sync-fetch": "^0.1.1"
   }
 }
