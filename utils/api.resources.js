@@ -10,4 +10,16 @@ const createRequestObj = (dataTable)=>{
     
  }
 
-module.exports ={apiBaseURL,createRequestObj}
+ const createReqArg = (method,reqBody)=>{
+    return reqArg = {
+        method : method,
+        headers : { Accept : 'application/json' },
+        body: reqBody
+     } 
+}
+
+module.exports ={
+       apiBaseURL,
+      createRequestObj,
+      createReqArg
+    }

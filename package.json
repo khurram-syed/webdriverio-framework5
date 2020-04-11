@@ -6,15 +6,15 @@
   "scripts": {
     "test": "wdio",
     "allure-report": "node_modules/.bin/allure generate --clean ./reports/allure-results && allure open",
-    "junit-report": "node_modules/.bin/junit-viewer --results=./reports/junit-results --save=junit-results.html && open junit-results.html"
+    "junit-report": "node_modules/.bin/junit-viewer --results=./reports/junit-results --save=./reports/junit-results.html && start ./reports/junit-results.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "allure-commandline": "^2.13.0",
     "cucumber": "6.0.2",
     "cucumber-tag-expressions": "1.1.1",
-    "allure-commandline": "^2.13.0",
     "junit-viewer": "^4.11.1"
   },
   "devDependencies": {

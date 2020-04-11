@@ -10,11 +10,11 @@ Feature: 3-Reviews Checks
      When user clicks on the "product" button
      And user sets the "email" value "test.com"
      And user sets the following login credentials
-     | loginName | loginPassword |
-     | Mark      | pass1234      |
+         | loginName | loginPassword |
+         | Mark      | pass1234      |
      And user clicks on review text box with <user> and <password>
      Then user should see error message "Please enter a valid email address." for email
-      Examples:
+       Examples:
          |user                | password | 
          |user@phptravels.com | demouser |
    @review2

@@ -46,7 +46,6 @@ Then(/^user should see error message \"(.*)\" for review$/,(errorMessage)=>{
    console.log("Error Review Text Selector Visible : "+isVisible);
    errorText=basePage.webGetText(product.errorReviewText);
    console.log("Actual Review ErrorText :"+errorText);
-   //assert.equal(errorText,'A review without text isn\'t much of a review.');
    
    expect(errorText).to.equal('A review without text isn\'t much of a review.');
 
@@ -58,5 +57,5 @@ Then(/^user should see the "(.*)" button enabled$/,(btnName)=>{
    console.log("***Button is enabled..!!! : "+isEnabled);
    
    expect(isEnabled).to.be.true
-   basePage.waitToLoad(4)
+   basePage.waitToLoad()
 });

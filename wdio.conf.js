@@ -1,7 +1,8 @@
 var glob= require('glob')
+const util = require('./utils/util.functions')
 var baseURL='http://www.kevinlamping.com/webdriverio-course-content/';
 let browsersSetup = require('./settings/wdio.browsers.setup');
-
+// var reportSufix = process.env.BUILD_NUMBER || util.getFormattedDate();
 exports.config = {
     seleniumArgs: browsersSetup,
     seleniumInstallArgs: browsersSetup,

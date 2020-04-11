@@ -24,34 +24,18 @@ var responseData;
    if(requestType==="GET"){
       console.log('=======================>>>> In the GET')
       requestURL = requestURL+reqObj.id
-      console.log("***requestURL :",requestURL)
       response = await fetch(requestURL)
       responseData = await response.json()
-      console.log('*****Response status**** : ',response.status)
-      console.log('*****Response body**** : ',responseData)
    }else if(requestType==="POST"){
       console.log('=======================>>>> In the POST')
-      console.log("***requestURL :",requestURL)
-      const reqArg = {
-         method : 'POST',
-         headers : {Accept : 'application/json'
-                   },
-         body: reqObj
-      }
+      const reqArg = apiResources.createReqArg('POST',reqObj)
       console.log('***reqArg :',reqArg)
       response = await fetch(requestURL,reqArg)
       responseData = await response.json()
-
    }else if(requestType==="PUT"){
       console.log('=======================>>>> In the PUT')
       requestURL = requestURL+reqObj.id
-      console.log("***requestURL :",requestURL)
-      const reqArg = {
-         method : 'PUT',
-         headers : {Accept : 'application/json', 'Accept-Charset' : 'UTF-8'
-                   },
-         body: reqObj
-      }
+      const reqArg = apiResources.createReqArg('PUT',reqObj)
       console.log('***reqArg :',reqArg)
       response = await fetch(requestURL,reqArg)
       responseData = await response.json()
@@ -59,16 +43,11 @@ var responseData;
    }else if(requestType==="DELETE"){
       console.log('=======================>>>> In the DELETE')
       requestURL = requestURL+reqObj.id
-      console.log("***requestURL :",requestURL)
-      const reqArg = {
-         method : 'DELETE'
-         // ,headers : {Accept : 'application/json', 'Accept-Charset' : 'UTF-8' }
-      }
+      const reqArg = apiResources.createReqArg('DELETE',null)
       console.log('***reqArg :',reqArg)
       response = await fetch(requestURL,reqArg)
       responseData = await response.json()
    }
-   basePage.waitToLoad(2)
    console.log('*****Response status**** : ',response.status)
 
  });
@@ -91,6 +70,6 @@ var responseData;
             console.log(`actualFieldName : ${actualFieldName}  - expectFieldName : ${expectFieldName}`)
             expect(actualFieldName.toString()).to.equal(expectFieldName)
       }
-//      basePage.waitToLoad(10); 
+//      basePage.waitToLoad(2); 
   })
 
