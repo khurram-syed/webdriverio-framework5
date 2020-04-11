@@ -7,6 +7,9 @@ const fetch = require('node-fetch')
 var requestURL =apiResources.apiBaseURL;
 var response;
 var responseData;
+
+/*  NOTE : RUNNING ALL FOURT TESTS WOULD FAIL AS IT IS RESTRICTION FROM API SERVER BUT INDIVIDUAL TEST WILL BE PASSING */
+
  Given(/^user has set the api request for "(.*)" api$/, (apiResource) =>{
    browser.url('./')
    requestURL += apiResource.toLowerCase()+"/";
@@ -17,7 +20,7 @@ var responseData;
  When(/^user runs the "(.*)" request for following posts values$/, async (requestType,dataTable) => {
    console.log(`user runs the ${requestType} request for following posts values`);
    
-   var reqObj=createRequestObj(dataTable)
+   var reqObj=apiResources.createRequestObj(dataTable)
    if(requestType==="GET"){
       console.log('=======================>>>> In the GET')
       requestURL = requestURL+reqObj.id
@@ -65,8 +68,7 @@ var responseData;
       response = await fetch(requestURL,reqArg)
       responseData = await response.json()
    }
-   
-   //basePage.waitToLoad(2)
+   basePage.waitToLoad(2)
    console.log('*****Response status**** : ',response.status)
 
  });
@@ -89,14 +91,6 @@ var responseData;
             console.log(`actualFieldName : ${actualFieldName}  - expectFieldName : ${expectFieldName}`)
             expect(actualFieldName.toString()).to.equal(expectFieldName)
       }
+//      basePage.waitToLoad(10); 
   })
 
- var createRequestObj = (dataTable)=>{
-    const obj={}
-    const data = dataTable.hashes()
-    for(let row=0; row<data.length ; row++){
-       obj[data[row]['FieldName']] = data[row]['FieldValue']
-    }
-    console.log('*** Object Created : ',obj)
-    return obj
- }
