@@ -134,7 +134,7 @@ class BasePage{
                     return true;
                 }
             }catch (e){
-
+                return false;
             }
         }, waitTime);
         return flag;
@@ -144,7 +144,6 @@ class BasePage{
        if(this.webWaitForAlert()){
           return browser.alertText();
        }
-       
         return null;
      }
 
