@@ -1,3 +1,4 @@
+@web
 Feature: 2- Home Page Accorion FAQ 
 
   Background: 

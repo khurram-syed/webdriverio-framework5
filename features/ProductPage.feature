@@ -1,4 +1,4 @@
-@product
+@product @web
 Feature: 4-Product Page Checks
     As a site user, I want to use the product page features so that
     I can use it confidently

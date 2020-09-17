@@ -1,4 +1,4 @@
-@review
+@review @web
 Feature: 3-Reviews Checks
     As a site user, I want to use the home page feature so that
     I can use it confidently

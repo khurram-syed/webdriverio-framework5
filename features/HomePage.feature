@@ -1,4 +1,4 @@
-@home
+@home @web
 Feature: 1-Home Page Checks
     As a site user, I want to use the home page feature so that
     I can use it confidently
