@@ -2,7 +2,8 @@ var glob= require('glob')
 const util = require('./utils/util.functions')
 var baseURL='http://www.kevinlamping.com/webdriverio-course-content/';
 let browsersSetup = require('./settings/wdio.browsers.setup');
-// var reportSufix = process.env.BUILD_NUMBER || util.getFormattedDate();
+const {join}  = require('path')
+ var reportSufix = process.env.BUILD_NUMBER || util.getFormattedDate();
 exports.config = {
     seleniumArgs: browsersSetup,
     seleniumInstallArgs: browsersSetup,
@@ -72,7 +73,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'info',
+    logLevel: 'silent',
     //
     // Set specific log levels per logger
     // loggers:
@@ -137,15 +138,13 @@ exports.config = {
                         outputFileFormat: function(opts) { // optional
                             return `results-${opts.cid}.${opts.capabilities}.xml`
                         }
-                    }
-                    ],
-
+                    }],
                     ['allure', {
                         outputDir: './reports/allure-results/',
                         disableWebdriverStepsReporting: true,
                         disableWebdriverScreenshotsReporting: false,
-                    }
-                    ]
+                        useCucumberStepReporter: true,
+                    }]
                ],
  //
     // If you are using Cucumber you need to specify the location of your step definitions.
@@ -162,11 +161,14 @@ exports.config = {
         source: true,       // <boolean> hide source uris
         profile: [],        // <string[]> (name) specify the profile to use
         strict: false,      // <boolean> fail if there are any undefined or pending steps
-        tagExpression: '',  // <string> (expression) only execute the features or scenarios with tags matching the expression
+        tagExpression: '@home or @review',  // <string> (expression) only execute the features or scenarios with tags matching the expression
         timeout: 60000,     // <number> timeout for step definitions
         ignoreUndefinedDefinitions: false, // <boolean> Enable this config to treat undefined definitions as warnings.
     },
-    
+    /* Runs after a Cucumber scenario
+    */
+//    afterScenario: function (uri, feature, scenario, result, sourceLocation) {
+//    },
     //
     // =====
     // Hooks
@@ -238,13 +240,25 @@ exports.config = {
     /**
      * Runs after a Cucumber step
      */
-    // afterStep: function ({ uri, feature, step }, context, { error, result, duration, passed, retries }) {
-    // },
+    afterStep: function ({ uri, feature, step }, context, { error, result, duration, passed, retries }) {
+         console.log("feature ==============> :",step)
+        //  console.log("scenario ==============> :",scenario)
+         console.log("result ==============> :",result)
+        if(error){
+             console.log("<===================---AFTER STEP----==============> :")
+          try{
+               let filePath = join(process.cwd(),'./screenshots/Error_'+reportSufix+'.png')
+               console.log("File Path ------>>>> :",filePath)
+               //browser.saveScreenshot(filePath)
+               browser.takeScreenshot();
+               console.log("---------Screenshot Taken in After Step------")
+          }catch(e){
+              console.log(e)
+          }  
+        }
+    },
     /**
-     * Runs after a Cucumber scenario
-     */
-    // afterScenario: function (uri, feature, scenario, result, sourceLocation) {
-    // },
+
     /**
      * Runs after a Cucumber feature
      */

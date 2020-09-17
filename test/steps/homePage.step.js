@@ -1,7 +1,8 @@
 const { Given, When, Then } = require('cucumber')
 var homePage = require('../pages/home.page.js');
 var productPage = require('../pages/product.page.js');
-var basePage = require('../pages/base.page')
+var basePage = require('../pages/base.page');
+const { expect } = require('chai');
 
 //Comenting on homePage.Step
 Given('user navigates to the site', function() {
@@ -37,6 +38,7 @@ Then('user should be seeing the review label', ()=> {
   basePage.webScrollIntoView(productPage.addAReviewLabel)
   let isDisplayed = basePage.webWaitForDisplayed(productPage.addAReviewLabel);
    console.log("***In Then - isDisplayed : "+isDisplayed);
+   expect(false).to.be.true;
   // var ifVisible = browser.isVisible('#comment-form > h3');
   
   //assert.equal(ifVisible,true);
