@@ -6,6 +6,7 @@
   "scripts": {
     "cleandir": "cleandir ./reports/allure-results",
     "test": "npm run cleandir && wdio",
+    "generate_allure": "node_modules/.bin/allure generate",
     "allure-report": "node_modules/.bin/allure generate --clean ./reports/allure-results && allure open",
     "junit-report": "node_modules/.bin/junit-viewer --results=./reports/junit-results --save=./reports/junit-results.html && start ./reports/junit-results.html"
   },

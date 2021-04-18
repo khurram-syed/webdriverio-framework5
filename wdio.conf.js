@@ -212,7 +212,7 @@ exports.config = {
      */
     before: function (capabilities, specs) {
         expect = require('chai').expect;
-        // browser.windowHandleFullscreen();
+       // browser.maximizeWindow()
     },
     /**
      * Runs before a WebdriverIO command gets executed.
